@@ -2,7 +2,9 @@ package com.group12.carrierpigeon.controller;
 
 import com.group12.carrierpigeon.networking.DataObject;
 import com.group12.carrierpigeon.threading.Command;
+import com.group12.carrierpigeon.threading.Publisher;
 import com.group12.carrierpigeon.threading.ReturnCommand;
+import com.group12.carrierpigeon.threading.Subscriber;
 import com.group12.carrierpigeon.threading.Worker;
 
 import java.io.ObjectInputStream;
@@ -13,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * Authentication Controller class responsible for session tickets and their validity
  */
-public class Authentication {
+public class Authentication extends Publisher<Boolean> implements Subscriber<DataObject> {
     private String authServerIp;
     private Integer authServerPort;
     private String username;
@@ -24,7 +26,7 @@ public class Authentication {
     private ObjectOutputStream out;
     private ObjectInputStream in;
 
-    private Command connectToAuthServer = () -> {
+    private ReturnCommand<DataObject> connectToAuthServer = () -> {
         try {
             // Attempt new connection
             this.comSocket = new Socket(this.authServerIp,this.authServerPort);
@@ -39,7 +41,9 @@ public class Authentication {
                 // If valid DataObject, ticket should have been response, thus, store it
                 this.ticket = ticket.getData();
             }
+            return new DataObject(DataObject.Status.VALID,null);
         } catch (Exception ignore) {
+            return new DataObject(DataObject.Status.FAIL,null);
         }
     };
 
@@ -81,10 +85,20 @@ public class Authentication {
     public void init(String username, String password) {
         this.username = username;
         this.password = password;
-        // Give connection command to worker to run on seperate thread
-        this.authServerComWorker.addCommand(connectToAuthServer);
-
+        // Give connection command to worker to run on separate thread
+        this.authServerComWorker.addReturnCommand(connectToAuthServer).subscribe(this);
     }
 
 
+    @Override
+    public void update(DataObject context) {
+        if (context.getStatus().equals(DataObject.Status.VALID)) {
+            // When Authentication is notified, it is done so via the UI thread
+            // Any logic to be executed by subscribers of the controller is done via the UI thread too
+            this.notifySubscribersInSameThread(true);
+        } else {
+            this.notifySubscribersInSameThread(false);
+        }
+        this.unsubscribeAll();
+    }
 }
