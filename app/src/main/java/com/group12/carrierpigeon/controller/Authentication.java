@@ -9,7 +9,10 @@ import com.group12.carrierpigeon.threading.Worker;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketAddress;
+import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -28,9 +31,15 @@ public class Authentication extends Publisher<Boolean> implements Subscriber<Dat
 
     private ReturnCommand<DataObject> connectToAuthServer = () -> {
         try {
-            if (this.comSocket == null || this.comSocket.isClosed()) {
+            if (this.comSocket == null || this.comSocket.isClosed() || !this.comSocket.isConnected()) {
                 // Attempt new connection
-                this.comSocket = new Socket(this.authServerIp,this.authServerPort);
+                if (this.comSocket != null) {
+                    // Close any streams if possible
+                    this.comSocket.close();
+                }
+                this.comSocket = new Socket();
+                SocketAddress address = new InetSocketAddress(this.authServerIp,this.authServerPort);
+                this.comSocket.connect(address,15000);
                 this.out = new ObjectOutputStream(this.comSocket.getOutputStream());
                 this.in = new ObjectInputStream(this.comSocket.getInputStream());
             }
@@ -47,6 +56,9 @@ public class Authentication extends Publisher<Boolean> implements Subscriber<Dat
                 return new DataObject(DataObject.Status.FAIL,null);
             }
             return new DataObject(DataObject.Status.VALID,null);
+        } catch (SocketException ignore) {
+            // Thrown if socket fails to connect to server in specified timeout period
+            return new DataObject(DataObject.Status.FAIL,null);
         } catch (Exception ignore) {
             return new DataObject(DataObject.Status.FAIL,null);
         }

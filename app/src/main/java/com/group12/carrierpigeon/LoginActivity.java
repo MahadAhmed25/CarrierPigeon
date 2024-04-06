@@ -1,10 +1,13 @@
 package com.group12.carrierpigeon;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -20,11 +23,23 @@ public class LoginActivity extends AppCompatActivity implements Subscriber<Boole
 
     private static Authentication authController;
 
+    private Button login;
+    private ProgressBar bar;
+    private EditText username;
+    private EditText password;
+    private TextView status;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
+        // To find items from the view (i.e., objects within the xml file), call this method along with the identifier of the object
+        this.login = this.findViewById(R.id.loginButton);
+        this.bar = this.findViewById(R.id.progressBar);
+        this.username = this.findViewById(R.id.usernameText);
+        this.password = this.findViewById(R.id.passwordText);
+        this.status = this.findViewById(R.id.status);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -35,21 +50,27 @@ public class LoginActivity extends AppCompatActivity implements Subscriber<Boole
     // When the login button is pressed, this method will fire
     public void onLoginClick(View view) {
         try {
-            // To find items from the view (i.e., objects within the xml file), call this method along with the identifier of the object
-            TextView status = this.findViewById(R.id.status);
-            CharSequence text = "Communicating with authentication services...";
-            status.setText(text);
+            this.displayStatusText("Communicating with authentication services...");
 
             // Get username and password
-            EditText username = this.findViewById(R.id.usernameText);
-            EditText password = this.findViewById(R.id.passwordText);
+            String usernameText = username.getText().toString();
+            String passwordText = password.getText().toString();
+
+            // Clear/disable buttons/text inputs
+            username.getText().clear();
+            password.getText().clear();
+
+            this.disableLogin();
+
+            bar.setVisibility(View.VISIBLE);
+
 
             if (authController == null) {
                 authController = new Authentication("192.168.2.56",1250);
             }
 
             authController.subscribe(this);
-            authController.init(username.getText().toString(),password.getText().toString());
+            authController.init(usernameText,passwordText);
 
         } catch (Exception e) {
         }
@@ -57,13 +78,32 @@ public class LoginActivity extends AppCompatActivity implements Subscriber<Boole
 
     @Override
     public void update(Boolean context) {
-        TextView status = this.findViewById(R.id.status);
         if (context) {
-            CharSequence valid = "Validated user credentials, please wait...";
-            status.setText(valid);
+            this.displayStatusText("Validated user credentials, please wait...");
+            // To move to another screen, use Intents
+            Intent move = new Intent(this, MainActivity.class);
+            startActivity(move);
         } else {
-            CharSequence invalid = "Unable to authenticate user";
-            status.setText(invalid);
+            this.displayStatusText("Unable to authenticate user");
+            bar.setVisibility(View.INVISIBLE);
+            this.enableLogin();
         }
     }
+
+    public void displayStatusText(String textToDisplay) {
+        status.setText(textToDisplay);
+    }
+
+    public void disableLogin() {
+        username.setEnabled(false);
+        password.setEnabled(false);
+        login.setEnabled(false);
+    }
+
+    public void enableLogin() {
+        username.setEnabled(true);
+        password.setEnabled(true);
+        login.setEnabled(true);
+    }
+
 }
