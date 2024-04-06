@@ -28,10 +28,13 @@ public class Authentication extends Publisher<Boolean> implements Subscriber<Dat
 
     private ReturnCommand<DataObject> connectToAuthServer = () -> {
         try {
-            // Attempt new connection
-            this.comSocket = new Socket(this.authServerIp,this.authServerPort);
-            this.out = new ObjectOutputStream(this.comSocket.getOutputStream());
-            this.in = new ObjectInputStream(this.comSocket.getInputStream());
+            if (this.comSocket == null || this.comSocket.isClosed()) {
+                // Attempt new connection
+                this.comSocket = new Socket(this.authServerIp,this.authServerPort);
+                this.out = new ObjectOutputStream(this.comSocket.getOutputStream());
+                this.in = new ObjectInputStream(this.comSocket.getInputStream());
+            }
+
             // Get ticket
             // Send request
             out.writeObject(new DataObject(DataObject.Status.VALID,("AUTH:"+username+":"+password).getBytes(StandardCharsets.UTF_8)));
@@ -40,6 +43,8 @@ public class Authentication extends Publisher<Boolean> implements Subscriber<Dat
             if (!ticket.getStatus().equals(DataObject.Status.FAIL)) {
                 // If valid DataObject, ticket should have been response, thus, store it
                 this.ticket = ticket.getData();
+            } else {
+                return new DataObject(DataObject.Status.FAIL,null);
             }
             return new DataObject(DataObject.Status.VALID,null);
         } catch (Exception ignore) {
