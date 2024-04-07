@@ -1,9 +1,18 @@
 package com.group12.carrierpigeon;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,6 +30,9 @@ public class ContactsActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_contact);
 
+        Toolbar tb = findViewById(R.id.toolbar);
+        setSupportActionBar(tb);
+
         RecyclerView recyclerView = findViewById(R.id.contact_recycler);
 
         List<Contact> contacts = new ArrayList<>();
@@ -30,5 +42,26 @@ public class ContactsActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new ContactsAdapter(getApplicationContext(), contacts ));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.contactscreen_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if (item.getItemId() == R.id.new_contact){
+            Toast.makeText(this, "new contact", Toast.LENGTH_SHORT).show();
+        } else if (item.getItemId() == R.id.logout) {
+            Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "what", Toast.LENGTH_SHORT).show();
+        }
+        return true;
+
     }
 }

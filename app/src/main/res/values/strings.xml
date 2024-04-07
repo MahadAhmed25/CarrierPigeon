@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">CarrierPigeon</string>
     <string name="contacts">Contacts</string>
+    <string name="logout">Logout</string>
+    <string name="add_contact">Add Contact</string>
+    <string-array name="contactScreen_menuOptions">
+        <item>Add Contact</item>
+    </string-array>
 </resources>
