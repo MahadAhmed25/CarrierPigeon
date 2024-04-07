@@ -1,7 +1,9 @@
 package com.group12.carrierpigeon.components.accounts;
 
-public class Account {
+import com.group12.carrierpigeon.components.Data.Data;
+import com.group12.carrierpigeon.components.Source;
 
+public class Account extends Source {
     private byte[] ticket;
     private String username;
     private String password;
@@ -12,15 +14,13 @@ public class Account {
         ticket = null;
     }
 
-    public byte[] getTicket() {
-        return this.ticket;
+    @Override
+    public void handleData(Data data) {
+
     }
 
-    public String getUsername() {
-        return this.username;
-    }
+    @Override
+    public void getData(Data data) {
 
-    public String getPassword() {
-        return this.password;
     }
 }
