@@ -2,8 +2,6 @@ package com.group12.carrierpigeon;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -70,7 +68,7 @@ public class LoginActivity extends AppCompatActivity implements Subscriber<Boole
             }
 
             authController.subscribe(this);
-            authController.init(usernameText,passwordText);
+            authController.Authenticate(usernameText,passwordText);
 
         } catch (Exception e) {
         }
