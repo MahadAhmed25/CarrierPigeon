@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity implements Subscriber<Boole
         setContentView(R.layout.activity_login);
         // To find items from the view (i.e., objects within the xml file), call this method along with the identifier of the object
         this.login = this.findViewById(R.id.loginButton);
-        this.bar = this.findViewById(R.id.progressBar);
+        //this.bar = this.findViewById(R.id.progressBar);
         this.username = this.findViewById(R.id.usernameText);
         this.password = this.findViewById(R.id.passwordText);
         this.status = this.findViewById(R.id.status);
@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity implements Subscriber<Boole
     // When the login button is pressed, this method will fire
     public void onLoginClick(View view) {
         try {
-            this.displayStatusText("Communicating with authentication services...");
+           // this.displayStatusText("Communicating with authentication services...");
 
             // Get username and password
             String usernameText = username.getText().toString();
@@ -77,20 +77,20 @@ public class LoginActivity extends AppCompatActivity implements Subscriber<Boole
     @Override
     public void update(Boolean context) {
         if (context) {
-            this.displayStatusText("Validated user credentials, please wait...");
+           // this.displayStatusText("Validated user credentials, please wait...");
             // To move to another screen, use Intents
             Intent move = new Intent(this, MainActivity.class);
             startActivity(move);
         } else {
-            this.displayStatusText("Unable to authenticate user");
+            //this.displayStatusText("Unable to authenticate user");
             bar.setVisibility(View.INVISIBLE);
             this.enableLogin();
         }
     }
 
-    public void displayStatusText(String textToDisplay) {
-        status.setText(textToDisplay);
-    }
+    //public void displayStatusText(String textToDisplay) {
+       // status.setText(textToDisplay);
+   // }
 
     public void disableLogin() {
         username.setEnabled(false);

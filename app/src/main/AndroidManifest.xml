@@ -13,9 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CarrierPigeon"
         tools:targetApi="31">
-        <activity
-            android:name=".LoginActivity"
-            android:exported="true" />
+<!--        <activity-->
+<!--            android:name=".LoginActivity"-->
+<!--            android:exported="true" />-->
         <activity
             android:name=".NewContactActivity"
             android:exported="true"/>
@@ -23,7 +23,7 @@
             android:exported="true"/>
         <activity
 
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

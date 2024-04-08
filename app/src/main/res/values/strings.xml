@@ -4,6 +4,12 @@
     <string name="logout">Logout</string>
     <string name="add_contact">Add Contact</string>
     <string name="add_new_contact">Add New Contact</string>
+    <string name="login_title">Welcome Back</string>
+    <string name="login_button_text">LOGIN</string>
+    <string name="forgot_password_text">Forgot Password</string>
+    <string name="noaccount_text">Do Not Have an account?</string>
+    <string name="register_text">Register Now</string>
+    <string name="apptitle_text">CarrierPigeon </string>
     <string-array name="contactScreen_menuOptions">
         <item>Add Contact</item>
     </string-array>
