@@ -19,6 +19,8 @@ import javax.crypto.BadPaddingException;
 
 public class Encryption {
 
+    //need to incorporate this with messages
+
     //actual encryption algorithm
     private static String encrypt(String plaintext, SecretKey key, IvParameterSpec iv) {
         try {
@@ -46,44 +48,5 @@ public class Encryption {
             e.printStackTrace();
             return null;
         }
-    }
-
-    private SecretKey decodeKey(String encodedKey) {
-        byte[] decodedKey = Base64.getDecoder().decode(encodedKey);
-        return new SecretKeySpec(decodedKey, "AES");
-    }
-
-    private IvParameterSpec decodeIV(String encodedIV) {
-        byte[] decodedIV = Base64.getDecoder().decode(encodedIV);
-        return new IvParameterSpec(decodedIV);
-    }
-
-    public byte[] encryptionAES(String[] input) {
-
-        String plainText = input[0];
-        String encodedKey = input[1];
-        String encodedIV = input[2];
-
-        SecretKey key = decodeKey(encodedKey);
-        IvParameterSpec iv = decodeIV(encodedIV);
-        String message = encrypt(plainText, key, iv);
-
-        byte[] ciphertext = message.getBytes();
-
-        return ciphertext;
-    }
-
-    public byte[] decryptionAES(String[] input) {
-        String ciphertext = input[0];
-        String encodedKey = input[1];
-        String encodedIV = input[2];
-
-        SecretKey key = decodeKey(encodedKey);
-        IvParameterSpec iv = decodeIV(encodedIV);
-        String message = decryptMessage(ciphertext, key, iv);
-
-        byte[] plaintext = message.getBytes();
-
-        return plaintext;
     }
 }
