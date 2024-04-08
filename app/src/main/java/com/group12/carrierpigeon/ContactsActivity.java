@@ -1,6 +1,7 @@
 package com.group12.carrierpigeon;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -55,7 +56,8 @@ public class ContactsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         if (item.getItemId() == R.id.new_contact){
-            Toast.makeText(this, "new contact", Toast.LENGTH_SHORT).show();
+            Intent move = new Intent(this, NewContactActivity.class);
+            startActivity(move);
         } else if (item.getItemId() == R.id.logout) {
             Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
         } else {
