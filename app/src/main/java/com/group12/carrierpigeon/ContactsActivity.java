@@ -1,13 +1,11 @@
 package com.group12.carrierpigeon;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -66,4 +64,6 @@ public class ContactsActivity extends AppCompatActivity {
         return true;
 
     }
+
+
 }
