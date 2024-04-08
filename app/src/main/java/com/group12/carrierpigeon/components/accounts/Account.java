@@ -105,6 +105,22 @@ public class Account extends Source {
         this.password = password;
     }
 
+    public Socket getComSocket() {
+        return this.comSocket;
+    }
+
+    public ObjectInputStream getIn() {
+        return this.in;
+    }
+
+    public ObjectOutputStream getOut() {
+        return this.out;
+    }
+
+    public byte[] getTicket() {
+        return this.ticket;
+    }
+
     @Override
     public void handleDataCommand(Command data) {
         this.accountWorker.addCommand(data);

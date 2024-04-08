@@ -14,6 +14,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.group12.carrierpigeon.components.accounts.Account;
+import com.group12.carrierpigeon.components.chat.Chat;
 import com.group12.carrierpigeon.controller.Authentication;
 import com.group12.carrierpigeon.threading.Subscriber;
 
@@ -87,6 +89,8 @@ public class LoginActivity extends AppCompatActivity implements Subscriber<Boole
             //Intent move = new Intent(this, MainActivity.class);
             System.out.println("Switched to some shit");
             //startActivity(move);
+            // Davis: Commented out method sends a message to testUser1
+            //new Chat(authController.getAccount()).sendMessage("Wow!");
         } else {
             //this.displayStatusText("Unable to authenticate user");
             //bar.setVisibility(View.INVISIBLE);

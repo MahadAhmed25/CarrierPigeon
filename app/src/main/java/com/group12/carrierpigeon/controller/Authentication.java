@@ -23,6 +23,10 @@ public class Authentication extends Publisher<Boolean> implements Subscriber<Dat
         this.account.handleDataResponseCommand(this.account.init);
     }
 
+    public Account getAccount() {
+        return this.account;
+    }
+
 
     @Override
     public void update(DataObject context) {
