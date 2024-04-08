@@ -30,10 +30,12 @@ public class LoginActivity extends AppCompatActivity implements Subscriber<Boole
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.out.println("This is an on create");
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
         // To find items from the view (i.e., objects within the xml file), call this method along with the identifier of the object
         this.login = this.findViewById(R.id.loginButton);
+        this.login.setOnClickListener(this::onLoginClick);
         //this.bar = this.findViewById(R.id.progressBar);
         this.username = this.findViewById(R.id.usernameText);
         this.password = this.findViewById(R.id.passwordText);
@@ -48,6 +50,9 @@ public class LoginActivity extends AppCompatActivity implements Subscriber<Boole
     // When the login button is pressed, this method will fire
     public void onLoginClick(View view) {
         try {
+
+            System.out.println("This is a test!");
+
            // this.displayStatusText("Communicating with authentication services...");
 
             // Get username and password
@@ -60,7 +65,7 @@ public class LoginActivity extends AppCompatActivity implements Subscriber<Boole
 
             this.disableLogin();
 
-            bar.setVisibility(View.VISIBLE);
+            //bar.setVisibility(View.VISIBLE);
 
 
             if (authController == null) {
@@ -79,11 +84,13 @@ public class LoginActivity extends AppCompatActivity implements Subscriber<Boole
         if (context) {
            // this.displayStatusText("Validated user credentials, please wait...");
             // To move to another screen, use Intents
-            Intent move = new Intent(this, MainActivity.class);
-            startActivity(move);
+            //Intent move = new Intent(this, MainActivity.class);
+            System.out.println("Switched to some shit");
+            //startActivity(move);
         } else {
             //this.displayStatusText("Unable to authenticate user");
-            bar.setVisibility(View.INVISIBLE);
+            //bar.setVisibility(View.INVISIBLE);
+            System.out.println("This is very cool");
             this.enableLogin();
         }
     }
