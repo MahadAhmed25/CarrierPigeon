@@ -39,6 +39,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsViewHolder> {
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ChatActivity.class);
+            intent.putExtra("user", contacts.get(position).getName());
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         });

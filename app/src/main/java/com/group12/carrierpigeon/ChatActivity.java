@@ -1,10 +1,13 @@
 package com.group12.carrierpigeon;
 
 import android.os.Bundle;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.group12.carrierpigeon.controller.Authentication;
 import com.group12.carrierpigeon.controller.ChatManagement;
@@ -26,6 +29,10 @@ public class ChatActivity extends AppCompatActivity implements Subscriber<List<O
     private int setup = 0;
 
     ImageButton backBtn;
+    EditText messageInput;
+    TextView otherUser;
+    RecyclerView recyclerView;
+    ImageButton sendMessagebtn;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
@@ -33,6 +40,18 @@ public class ChatActivity extends AppCompatActivity implements Subscriber<List<O
 
         backBtn = findViewById(R.id.back_arrow_icon);
         backBtn.setOnClickListener(v -> finish());
+
+        messageInput = findViewById(R.id.message_send_input);
+        otherUser = findViewById(R.id.other_user);
+        otherUser.setText(getIntent().getExtras().getString("user"));
+
+        recyclerView = findViewById(R.id.chatroom_recylcer);
+        sendMessagebtn = findViewById(R.id.message_send_btn);
+
+
+
+
+
 
         this.setup();
 
@@ -65,5 +84,6 @@ public class ChatActivity extends AppCompatActivity implements Subscriber<List<O
                 this.sentMessages.add((String) msg);
             }
         }
+
     }
 }
