@@ -27,7 +27,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/PersonalInformation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -42,10 +42,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/setting" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/NotifcationChat"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/prefrences_border"
@@ -57,7 +57,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
+        app:layout_constraintTop_toBottomOf="@+id/PersonalInformation" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -71,7 +71,7 @@
         app:srcCompat="@drawable/ic_people_outline_24" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/setting"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -88,7 +88,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/PrivacyPostion"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/prefrences_border"
@@ -101,10 +101,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/NotifcationChat" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/DataStorage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/prefrences_border"
@@ -116,10 +116,10 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/PrivacyPostion" />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/PasswordAccount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/prefrences_border"
@@ -131,10 +131,10 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/DataStorage" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/more"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -146,10 +146,10 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+        app:layout_constraintTop_toBottomOf="@+id/PasswordAccount" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/Help"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/prefrences_border"
@@ -161,10 +161,10 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintTop_toBottomOf="@+id/more" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/Feedback"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/prefrences_border"
@@ -176,10 +176,10 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        app:layout_constraintTop_toBottomOf="@+id/Help" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/About"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/prefrences_border"
@@ -191,6 +191,6 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        app:layout_constraintTop_toBottomOf="@+id/Feedback" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
