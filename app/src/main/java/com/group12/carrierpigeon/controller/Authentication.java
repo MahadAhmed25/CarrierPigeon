@@ -32,13 +32,16 @@ public class Authentication extends Publisher<Boolean> implements Subscriber<Dat
 
     @Override
     public void update(DataObject context, String whoIs) {
-        if (context.getStatus().equals(DataObject.Status.VALID)) {
+        if (whoIs != null && whoIs.contains("AUTH") && context.getStatus().equals(DataObject.Status.VALID)) {
             // When Authentication is notified, it is done so via the UI thread
             // Any logic to be executed by subscribers of the controller is done via the UI thread too
             this.notifySubscribersInSameThread(true,whoIs);
-        } else {
+            // Automatically unsubscribe everyone when used authenticate
+            this.unsubscribeAll();
+        } else if (whoIs != null && whoIs.contains("AUTH")) {
             this.notifySubscribersInSameThread(false,whoIs);
+            // Automatically unsubscribe everyone when used authenticate
+            this.unsubscribeAll();
         }
-        this.unsubscribeAll();
     }
 }

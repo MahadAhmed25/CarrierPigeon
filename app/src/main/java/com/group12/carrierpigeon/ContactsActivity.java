@@ -55,7 +55,6 @@ public class ContactsActivity extends AppCompatActivity implements Subscriber<Da
     public void update(DataObject context, String whoIs) {
         if (context.getData() != null && whoIs.equals("CONTACTS")) {
             String dataString = new String(context.getData(), StandardCharsets.UTF_8);
-            System.out.println(dataString);
             populateContacts(dataString);
 
             RecyclerView recyclerView = findViewById(R.id.contact_recycler);
@@ -88,7 +87,9 @@ public class ContactsActivity extends AppCompatActivity implements Subscriber<Da
             Intent move = new Intent(this, NewContactActivity.class);
             startActivity(move);
         } else if (item.getItemId() == R.id.logout) {
-            Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show();
+            // On logout, go back to login screen
+            Intent move = new Intent(this, LoginActivity.class);
+            startActivity(move);
         } else {
             Toast.makeText(this, "what", Toast.LENGTH_SHORT).show();
         }
