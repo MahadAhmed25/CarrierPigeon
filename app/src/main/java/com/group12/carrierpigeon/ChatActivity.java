@@ -7,8 +7,12 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.group12.carrierpigeon.adapters.ChatMessageAdapter;
+import com.group12.carrierpigeon.adapters.ContactsAdapter;
+import com.group12.carrierpigeon.components.chat.ChatMessageViewHolder;
 import com.group12.carrierpigeon.controller.Authentication;
 import com.group12.carrierpigeon.controller.ChatManagement;
 import com.group12.carrierpigeon.controller.Encryption;
@@ -24,8 +28,7 @@ public class ChatActivity extends AppCompatActivity implements Subscriber<List<O
     private Authentication authController;
     private String contact;
 
-    private List<String> sentMessages;
-    private List<String> receivedMessages;
+    private List<ChatMessageViewHolder> messages;
     private int setup = 0;
 
     ImageButton backBtn;
@@ -48,10 +51,7 @@ public class ChatActivity extends AppCompatActivity implements Subscriber<List<O
         recyclerView = findViewById(R.id.chatroom_recylcer);
         sendMessagebtn = findViewById(R.id.message_send_btn);
 
-
-
-
-
+        this.messages = new ArrayList<>();
 
         this.setup();
 
@@ -64,8 +64,6 @@ public class ChatActivity extends AppCompatActivity implements Subscriber<List<O
         chatManagementController = new ChatManagement(this.encryptionController,this.authController);
         // Chat Controller will get messages on a separate thread, thus need to subscribe to it for results
         this.chatManagementController.subscribe(this);
-        this.receivedMessages = new ArrayList<>();
-        this.sentMessages = new ArrayList<>();
         // Get messages sent by contact to person
         this.chatManagementController.getMessages(this.contact,Info.username);
     }
@@ -74,15 +72,23 @@ public class ChatActivity extends AppCompatActivity implements Subscriber<List<O
     public void update(List<Object> context, String whoIs) {
         if (whoIs != null && whoIs.contains("MESSAGES") && this.setup == 0) {
             for (Object msg : context) {
-                this.receivedMessages.add((String) msg);
+                String mesg = (String) msg;
+                if (!mesg.isEmpty()) {
+                    this.messages.add(new ChatMessageViewHolder(this.contact,(String) msg));
+                }
             }
             this.setup = 1;
             // Get messages sent by user to contact
             this.chatManagementController.getMessages(Info.username,this.contact);
         } else if (whoIs != null && whoIs.contains("MESSAGES") && this.setup == 1) {
             for (Object msg : context) {
-                this.sentMessages.add((String) msg);
+                String mesg = (String) msg;
+                if (!mesg.isEmpty()) {
+                    this.messages.add(new ChatMessageViewHolder(Info.username,(String) msg));
+                }
             }
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setAdapter(new ChatMessageAdapter(getApplicationContext(),messages));
         }
 
     }

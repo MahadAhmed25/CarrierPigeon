@@ -23,7 +23,7 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.
 
     public ChatMessageAdapter(Context context, List<ChatMessageViewHolder> messagesList){
         this.context = context;
-        this.messagesList = messagesList
+        this.messagesList = messagesList;
     }
 
     @NonNull
