@@ -10,6 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.group12.carrierpigeon.R;
 
 
+/**
+ * ViewHolder for displaying contact information in a RecyclerView.
+ * It holds references to views representing the contact's image, name, and phone number.
+ */
 public class ContactsViewHolder extends RecyclerView.ViewHolder {
 
     public ImageView contactDP;

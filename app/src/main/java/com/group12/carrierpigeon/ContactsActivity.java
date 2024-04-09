@@ -25,10 +25,16 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Activity for displaying the list of contacts.
+ */
 public class ContactsActivity extends AppCompatActivity implements Subscriber<DataObject> {
 
     private List<Contact> contacts;
 
+    /**
+     * Initialize the activity and set up the UI components.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +57,12 @@ public class ContactsActivity extends AppCompatActivity implements Subscriber<Da
 
     }
 
+    /**
+     * Updates the UI with data received from the server.
+     *
+     * @param context The data received from the server.
+     * @param whoIs   Indicates the type of data received.
+     */
     @Override
     public void update(DataObject context, String whoIs) {
         if (context.getData() != null && whoIs.equals("CONTACTS")) {
@@ -63,6 +75,11 @@ public class ContactsActivity extends AppCompatActivity implements Subscriber<Da
         }
     }
 
+    /**
+     * Populates the list of contacts based on the data received from the server.
+     *
+     * @param usersString The string containing the list of contacts.
+     */
     public void populateContacts(String usersString) {
         String[] usersArray = usersString.split(",");
         for (String user: usersArray) {
@@ -73,6 +90,12 @@ public class ContactsActivity extends AppCompatActivity implements Subscriber<Da
         System.out.println(contacts + "bye");
     }
 
+    /**
+     * Inflates the menu to be displayed in the action bar.
+     *
+     * @param menu The menu to be inflated.
+     * @returns True if the menu is successfully inflated
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -80,6 +103,12 @@ public class ContactsActivity extends AppCompatActivity implements Subscriber<Da
         return true;
     }
 
+    /**
+     * Handles clicks on menu items.
+     *
+     * @param item The menu item that was clicked.
+     * @returns True if the menu item click was handled, false otherwise.
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 

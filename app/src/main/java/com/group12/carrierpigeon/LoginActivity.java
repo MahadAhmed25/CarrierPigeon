@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,9 @@ import androidx.core.view.WindowInsetsCompat;
 import com.group12.carrierpigeon.controller.Authentication;
 import com.group12.carrierpigeon.threading.Subscriber;
 
+/**
+ * The LoginActivity class is responsible for handling user authentication and login functionality.
+ */
 public class LoginActivity extends AppCompatActivity implements Subscriber<Boolean> {
 
     public static Authentication authController;
@@ -27,6 +31,9 @@ public class LoginActivity extends AppCompatActivity implements Subscriber<Boole
     private EditText password;
     private TextView status;
 
+    /**
+     * Initializes the activity layout and sets up necessary UI elements and event listeners.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,11 +53,13 @@ public class LoginActivity extends AppCompatActivity implements Subscriber<Boole
         });
     }
 
-    // When the login button is pressed, this method will fire
+    /**
+     * Method called when the login button is clicked. Initiates the authentication process.
+     *
+     * @param view The view that triggered the click event (in this case, the login button).
+     */
     public void onLoginClick(View view) {
         try {
-
-           // this.displayStatusText("Communicating with authentication services...");
 
             // Get username and password
             String usernameText = username.getText().toString();
@@ -61,8 +70,6 @@ public class LoginActivity extends AppCompatActivity implements Subscriber<Boole
             password.getText().clear();
 
             this.disableLogin();
-
-            //bar.setVisibility(View.VISIBLE);
 
 
             if (authController == null) {
@@ -76,35 +83,36 @@ public class LoginActivity extends AppCompatActivity implements Subscriber<Boole
         }
     }
 
+    /**
+     * Updates the UI based on the authentication result received from the authentication controller.
+     *
+     * @param context The result of the authentication process.
+     * @param whoIs
+     */
     @Override
     public void update(Boolean context, String whoIs) {
         if (context) {
-           // this.displayStatusText("Validated user credentials, please wait...");
-            // To move to another screen, use Intents
-            //Intent move = new Intent(this, MainActivity.class);
             //switch screens
             Intent move= new Intent(this, ContactsActivity.class);
             startActivity(move);
-            //startActivity(move);
-            // Davis: Commented out method sends a message to testUser1
-            //new Chat(authController.getAccount()).sendMessage("Wow!");
         } else {
-            //this.displayStatusText("Unable to authenticate user");
-            //bar.setVisibility(View.INVISIBLE);
+            Toast.makeText(this, "Unable to authenticate user", Toast.LENGTH_SHORT).show();
             this.enableLogin();
         }
     }
 
-    //public void displayStatusText(String textToDisplay) {
-       // status.setText(textToDisplay);
-   // }
-
+    /**
+     * Helper method to disable login while authenticating
+     */
     public void disableLogin() {
         username.setEnabled(false);
         password.setEnabled(false);
         login.setEnabled(false);
     }
 
+    /**
+     * Helper method to enable login after authenticating
+     */
     public void enableLogin() {
         username.setEnabled(true);
         password.setEnabled(true);

@@ -1,5 +1,8 @@
 package com.group12.carrierpigeon.components.contacts;
 
+/**
+ * Represents a contact with a name, phone number, and image.
+ */
 public class Contact {
     String name;
     String phoneNo;

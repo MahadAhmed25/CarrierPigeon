@@ -1,5 +1,8 @@
 package com.group12.carrierpigeon.components.chat;
 
+/**
+ * Represents a Chat Message with a sender and message.
+ */
 public class ChatMessageViewHolder {
 
     private String sender;

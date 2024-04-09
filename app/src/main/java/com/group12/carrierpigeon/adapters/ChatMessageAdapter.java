@@ -16,16 +16,33 @@ import com.group12.carrierpigeon.components.chat.ChatMessageViewHolder;
 
 import java.util.List;
 
+/**
+ * Adapter for displaying chat messages in a RecyclerView.
+ * Reference: https://www.youtube.com/watch?v=er-hKSt1r7E&list=PLgpnJydBcnPB-aQ6P5hWCHBjy8LWZ9x4w&index=15
+ */
 public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.ChatModelViewHolder> {
 
     Context context;
     List<ChatMessageViewHolder> messagesList;
 
+    /**
+     * Constructor for the ChatMessageAdapter class.
+     *
+     * @param context      The context of the activity or fragment.
+     * @param messagesList The list of chat message view holders to be displayed.
+     */
     public ChatMessageAdapter(Context context, List<ChatMessageViewHolder> messagesList){
         this.context = context;
         this.messagesList = messagesList;
     }
 
+    /**
+     * Inflates the layout for each chat message item in the RecyclerView.
+     *
+     * @param parent   The ViewGroup into which the new View will be added after it is bound to an adapter position.
+     * @param viewType The type of the new View.
+     * @returns A new ViewHolder that holds a View of the given view type.
+     */
     @NonNull
     @Override
     public ChatModelViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -34,6 +51,12 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.
         return new ChatModelViewHolder(view);
     }
 
+    /**
+     * Binds data to the views in the ViewHolder.
+     *
+     * @param holder   The ViewHolder which should be updated to represent the contents of the item at the given position.
+     * @param position The position of the item within the adapter's data set.
+     */
     @Override
     public void onBindViewHolder(@NonNull ChatModelViewHolder holder, int position ) {
         ChatMessageViewHolder msg = messagesList.get(position);
@@ -52,12 +75,20 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.
 
     }
 
+    /**
+     * Returns the total number of items in the data set held by the adapter.
+     *
+     * @returns The total number of items in this adapter.
+     */
     @Override
     public int getItemCount() {
         return messagesList.size();
     }
 
 
+    /**
+     * ViewHolder class to hold references to the views that will be populated with chat message data.
+     */
     class ChatModelViewHolder extends RecyclerView.ViewHolder {
         LinearLayout senderBubble, receiverBubble;
         TextView senderMessage, receiverMessage;

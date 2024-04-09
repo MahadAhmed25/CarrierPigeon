@@ -22,6 +22,9 @@ import com.group12.carrierpigeon.threading.Subscriber;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Activity class for managing the chat interface between users.
+ */
 public class ChatActivity extends AppCompatActivity implements Subscriber<List<Object>> {
 
     private Encryption encryptionController;
@@ -58,6 +61,12 @@ public class ChatActivity extends AppCompatActivity implements Subscriber<List<O
 
     }
 
+    /**
+     * Callback method called when the "Send" button is pressed.
+     * Sends the typed message to the recipient.
+     *
+     * @param view The view that was clicked (in this case, the "Send" button).
+     */
     public void onSendButtonPressed(View view) {
         // Get message that was typed by user
         messageInput.setEnabled(false);
@@ -67,6 +76,9 @@ public class ChatActivity extends AppCompatActivity implements Subscriber<List<O
         chatManagementController.sendMessage(message,Info.username,this.contact);
     }
 
+    /**
+     * Performs the initial setup for the chat activity, including retrieving messages and setting up controllers.
+     */
     private void setup() {
         this.contact = getIntent().getExtras().getString("user");
         this.authController = LoginActivity.authController;
@@ -78,6 +90,13 @@ public class ChatActivity extends AppCompatActivity implements Subscriber<List<O
         this.chatManagementController.getMessages(this.contact,Info.username);
     }
 
+    /**
+     * Callback method for receiving updates from the chat management controller.
+     * Handles incoming messages and updates the UI accordingly.
+     *
+     * @param context The context of the update, which contains information such as messages or status.
+     * @param whoIs   A string identifier indicating the type of update received.
+     */
     @Override
     public void update(List<Object> context, String whoIs) {
         if (whoIs != null && whoIs.contains("MESSAGES") && this.setup == 0) {

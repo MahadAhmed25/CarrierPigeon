@@ -15,6 +15,9 @@ import com.group12.carrierpigeon.dialogs.LoadingDialog;
 import com.group12.carrierpigeon.networking.DataObject;
 import com.group12.carrierpigeon.threading.Subscriber;
 
+/**
+ * The NewContactActivity class handles the addition of new contacts to the user's contact list.
+ */
 public class NewContactActivity extends AppCompatActivity implements Subscriber<DataObject> {
 
     ImageView backArrow;
@@ -23,6 +26,9 @@ public class NewContactActivity extends AppCompatActivity implements Subscriber<
     EditText usernameToAdd;
     LoadingDialog loadingDialog;
 
+    /**
+     * Initializes the activity layout and sets up necessary UI elements and event listeners.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +50,11 @@ public class NewContactActivity extends AppCompatActivity implements Subscriber<
 
     }
 
-    // When the search button is pressed, this method will fire
+    /**
+     * Method called when the search button is clicked. Initiates the process of adding a new contact.
+     *
+     * @param view The view that triggered the click event (in this case, the search button).
+     */
     public void onSearchClick(View view) {
         // Show loading screen
         this.loadingDialog.show();
@@ -54,6 +64,12 @@ public class NewContactActivity extends AppCompatActivity implements Subscriber<
 
     }
 
+    /**
+     * Updates the UI based on the result of the new contact addition process.
+     *
+     * @param context The result of the new contact addition process.
+     * @param whoIs
+     */
     @Override
     public void update(DataObject context, String whoIs) {
         if (whoIs != null && whoIs.contains("ADDCONTACT")) {
