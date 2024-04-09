@@ -88,10 +88,11 @@ public class ChatActivity extends AppCompatActivity implements Subscriber<List<O
                     this.messages.add(new ChatMessageViewHolder(Info.username,(String) msg));
                 }
             }
-            recyclerView = findViewById(R.id.chatroom_recylcer);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            recyclerView.setAdapter(new ChatMessageAdapter(getApplicationContext(),messages));
+
         }
+        this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        ChatMessageAdapter adapter = new ChatMessageAdapter(getApplicationContext(), messages);
+        this.recyclerView.setAdapter(adapter);
 
     }
 }

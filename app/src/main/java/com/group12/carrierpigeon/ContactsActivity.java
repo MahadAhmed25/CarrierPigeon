@@ -68,7 +68,7 @@ public class ContactsActivity extends AppCompatActivity implements Subscriber<Da
         String[] usersArray = usersString.split(",");
         for (String user: usersArray) {
             if (!user.isEmpty()) {
-                this.contacts.add(new Contact(user.trim(), "1 111 111 1111", R.drawable.a));
+                this.contacts.add(new Contact(user.trim(), "1 647 432 3412", R.drawable.a));
             }
         }
         System.out.println(contacts + "bye");

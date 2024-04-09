@@ -29,6 +29,7 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.
     @NonNull
     @Override
     public ChatModelViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        System.out.println("You have reached this 0");
         View view = LayoutInflater.from(context).inflate(R.layout.chatmessage_recycler, parent, false);
         return new ChatModelViewHolder(view);
     }
@@ -36,6 +37,7 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.
     @Override
     public void onBindViewHolder(@NonNull ChatModelViewHolder holder, int position ) {
         ChatMessageViewHolder msg = messagesList.get(position);
+        System.out.println(msg.getMessage() + " " + msg.getSender());
 
         if (msg.getSender().equals(Info.username)) {
             holder.receiverBubble.setVisibility(View.GONE);
@@ -52,7 +54,7 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageAdapter.
 
     @Override
     public int getItemCount() {
-        return 0;
+        return messagesList.size();
     }
 
 

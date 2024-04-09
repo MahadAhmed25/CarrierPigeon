@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity implements Subscriber<Boole
 
 
             if (authController == null) {
-                authController = new Authentication("192.168.2.56",1250);
+                authController = new Authentication(Info.IP,1250);
             }
 
             authController.subscribe(this);
