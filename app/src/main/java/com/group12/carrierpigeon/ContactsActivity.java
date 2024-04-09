@@ -42,12 +42,12 @@ public class ContactsActivity extends AppCompatActivity implements Subscriber<Da
 
         this.contacts = new ArrayList<>();
 
-        Authentication authController = new Authentication("70.49.90.188",1250);
-        Account account = authController.getAccount();
+        //Authentication authController = new Authentication("70.49.90.188",1250);
+        Account account = LoginActivity.authController.getAccount();
         account.setCredentials(Info.username, Info.password);
-        authController.authenticate(Info.username, Info.password);
+        LoginActivity.authController.authenticate(Info.username, Info.password);
         account.subscribe(this);
-        authController.getAccount().getContacts();
+        LoginActivity.authController.getAccount().getContacts();
 
     }
 
@@ -67,7 +67,9 @@ public class ContactsActivity extends AppCompatActivity implements Subscriber<Da
     public void populateContacts(String usersString) {
         String[] usersArray = usersString.split(",");
         for (String user: usersArray) {
-            this.contacts.add(new Contact(user.trim(), "1 111 111 1111", R.drawable.a));
+            if (!user.isEmpty()) {
+                this.contacts.add(new Contact(user.trim(), "1 111 111 1111", R.drawable.a));
+            }
         }
         System.out.println(contacts + "bye");
     }
