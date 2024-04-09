@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -15,13 +14,22 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.group12.carrierpigeon.components.accounts.Account;
 import com.group12.carrierpigeon.components.contacts.Contact;
-import com.group12.carrierpigeon.components.contacts.ContactsAdapter;
+import com.group12.carrierpigeon.adapters.ContactsAdapter;
+import com.group12.carrierpigeon.controller.Authentication;
+import com.group12.carrierpigeon.networking.DataObject;
+import com.group12.carrierpigeon.threading.ReturnCommand;
+import com.group12.carrierpigeon.threading.Subscriber;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class ContactsActivity extends AppCompatActivity {
+public class ContactsActivity extends AppCompatActivity implements Subscriber<DataObject> {
+
+    private List<Contact> contacts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +42,27 @@ public class ContactsActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.contact_recycler);
 
-        List<Contact> contacts = new ArrayList<>();
-        contacts.add(new Contact("John Wick", "647 706 4803", R.drawable.a ));
-        contacts.add(new Contact("Mahad Ahmed", "123 493 3312", R.drawable.a ));
-        contacts.add(new Contact("John Doe", "647 321 3543", R.drawable.a ));
+        this.contacts = new ArrayList<>();
+
+        Authentication authController = new Authentication("70.49.90.188",1250);
+        Account account = authController.getAccount();
+        account.setCredentials(Info.username, Info.password);
+        authController.Authenticate(Info.username, Info.password);
+        account.subscribe(this);
+        authController.getAccount().getContacts();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new ContactsAdapter(getApplicationContext(), contacts ));
+    }
+
+    @Override
+    public void update(DataObject context) {
+        if (context.getData() != null && context.getData().length > 0) {
+            String dataString = new String(context.getData(), StandardCharsets.UTF_8);
+            System.out.println(dataString);
+        } else {
+            System.out.println("DataObject has empty or null data.");
+        }
     }
 
     @Override
@@ -64,6 +86,7 @@ public class ContactsActivity extends AppCompatActivity {
         return true;
 
     }
+
 
 
 }

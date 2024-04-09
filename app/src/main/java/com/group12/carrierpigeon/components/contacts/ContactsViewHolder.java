@@ -12,8 +12,9 @@ import com.group12.carrierpigeon.R;
 
 public class ContactsViewHolder extends RecyclerView.ViewHolder {
 
-    ImageView contactDP;
-    TextView name, phoneNo;
+    public ImageView contactDP;
+    public TextView name;
+    public TextView phoneNo;
 
     public ContactsViewHolder(@NonNull View itemView) {
         super(itemView);

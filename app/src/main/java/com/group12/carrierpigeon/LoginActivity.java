@@ -14,8 +14,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.group12.carrierpigeon.components.accounts.Account;
-import com.group12.carrierpigeon.components.chat.Chat;
 import com.group12.carrierpigeon.controller.Authentication;
 import com.group12.carrierpigeon.threading.Subscriber;
 
@@ -71,7 +69,7 @@ public class LoginActivity extends AppCompatActivity implements Subscriber<Boole
 
 
             if (authController == null) {
-                authController = new Authentication("192.168.2.56",1250);
+                authController = new Authentication("70.49.90.188",1250);
             }
 
             authController.subscribe(this);

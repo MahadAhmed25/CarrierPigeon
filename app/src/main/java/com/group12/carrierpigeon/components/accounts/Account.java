@@ -5,6 +5,7 @@ import com.group12.carrierpigeon.components.contacts.Contact;
 import com.group12.carrierpigeon.networking.DataObject;
 import com.group12.carrierpigeon.threading.Command;
 import com.group12.carrierpigeon.threading.ReturnCommand;
+import com.group12.carrierpigeon.threading.Subscriber;
 import com.group12.carrierpigeon.threading.Worker;
 
 import java.io.ObjectInputStream;
@@ -35,7 +36,7 @@ public class Account extends Source {
             // Return response
             return (DataObject) in.readObject();
         } catch (Exception e) {
-
+            e.printStackTrace();
         };
         return new DataObject(DataObject.Status.FAIL,null);
     };

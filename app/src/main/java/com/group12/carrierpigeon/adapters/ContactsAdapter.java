@@ -1,4 +1,4 @@
-package com.group12.carrierpigeon.components.contacts;
+package com.group12.carrierpigeon.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.group12.carrierpigeon.R;
+import com.group12.carrierpigeon.components.contacts.Contact;
+import com.group12.carrierpigeon.components.contacts.ContactsViewHolder;
 
 import java.util.List;
 

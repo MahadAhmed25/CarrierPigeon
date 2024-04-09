@@ -1,5 +1,6 @@
 package com.group12.carrierpigeon.controller;
 
+import com.group12.carrierpigeon.Info;
 import com.group12.carrierpigeon.components.accounts.Account;
 import com.group12.carrierpigeon.networking.DataObject;
 import com.group12.carrierpigeon.threading.Publisher;
@@ -20,6 +21,7 @@ public class Authentication extends Publisher<Boolean> implements Subscriber<Dat
 
     public void Authenticate(String username, String password) {
         this.account.setCredentials(username, password);
+        Info.password = password; Info.username = username;
         this.account.handleDataResponseCommand(this.account.init);
     }
 
