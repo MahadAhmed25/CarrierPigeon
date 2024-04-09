@@ -119,7 +119,13 @@ public class ContactsActivity extends AppCompatActivity implements Subscriber<Da
             // On logout, go back to login screen
             Intent move = new Intent(this, LoginActivity.class);
             startActivity(move);
-        } else {
+        } else if (item.getItemId() == R.id.settings_btn) {
+            Intent move = new Intent(this, SettingActivity.class);
+            startActivity(move);
+        } else if (item.getItemId() == R.id.help_support) {
+            Toast.makeText(this, "redirecting to support page", Toast.LENGTH_SHORT).show();
+        }
+        else {
             Toast.makeText(this, "what", Toast.LENGTH_SHORT).show();
         }
         return true;

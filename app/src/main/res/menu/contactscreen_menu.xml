@@ -4,6 +4,12 @@
         android:id="@+id/new_contact"
         android:title="@string/add_contact" />
     <item
+        android:id="@+id/settings_btn"
+        android:title="Settings"/>
+    <item
+        android:id="@+id/help_support"
+        android:title="Help"/>
+    <item
         android:id="@+id/logout"
         android:title="@string/logout"/>
 </menu>
