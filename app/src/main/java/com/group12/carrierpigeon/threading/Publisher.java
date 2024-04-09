@@ -24,6 +24,7 @@ public class Publisher<T> {
     public void notifySubscribers(T context, String whoIs) {
         new Handler(Looper.getMainLooper()).post(() -> {
             for (Subscriber<T> subscriber : this.subscribers) {
+                System.out.println(subscriber.getClass());
                 subscriber.update(context,whoIs);
             }
         });

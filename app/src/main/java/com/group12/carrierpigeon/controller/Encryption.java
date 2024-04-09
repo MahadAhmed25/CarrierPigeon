@@ -40,16 +40,17 @@ public class Encryption extends Publisher<List<Object>> implements Subscriber<Da
     }
 
     public void getEncryptionDetails(String username, String recipient) {
+        System.out.println("Step2!");
         // First check ticket
         Account account = this.authentication.getAccount();
         account.handleDataResponseCommand(account.checkTicket, "CHECKTICKET");
-        account.subscribe(this);
         // Contact server for encryption details
         account.handleDataResponseCommand(() -> {
             try {
                 account.getOut().writeObject(new DataObject(DataObject.Status.VALID,("GETKEY:"+username+":"+recipient+":"+ new String(account.getTicket())).getBytes(StandardCharsets.UTF_8)));
                 return (DataObject) account.getIn().readObject();
             } catch (Exception e) {
+                e.printStackTrace();
                 return new DataObject(DataObject.Status.FAIL,null);
             }
             },"KEY");
@@ -109,7 +110,7 @@ public class Encryption extends Publisher<List<Object>> implements Subscriber<Da
             // Extract encryption details from DataObject
             // Notify subscribers of class
             this.notifySubscribersInSameThread(extractEncryptionInfo(context),"ENCINFO");
-        } else {
+        } else if (whoIs != null && whoIs.contains("KEY")) {
             this.notifySubscribersInSameThread(null,"ENCINFO-FAIL");
         }
     }
