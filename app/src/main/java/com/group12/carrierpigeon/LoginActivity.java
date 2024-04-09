@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity implements Subscriber<Boole
             }
 
             authController.subscribe(this);
-            authController.Authenticate(usernameText,passwordText);
+            authController.authenticate(usernameText,passwordText);
 
         } catch (Exception e) {
         }

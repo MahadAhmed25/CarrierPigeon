@@ -1,5 +1,7 @@
 package com.group12.carrierpigeon.controller;
 
+import android.provider.ContactsContract;
+
 import com.group12.carrierpigeon.components.accounts.Account;
 import com.group12.carrierpigeon.networking.DataObject;
 import com.group12.carrierpigeon.threading.Publisher;
@@ -30,13 +32,20 @@ import javax.crypto.BadPaddingException;
 
 public class Encryption extends Publisher<List<Object>> implements Subscriber<DataObject> {
 
-    public void getEncryptionDetails(Authentication auth, String username, String recipient) {
-        Account account = auth.getAccount();
+    private Authentication authentication;
+
+    public Encryption(Authentication authentication) {
+        this.authentication = authentication;
+        this.authentication.getAccount().subscribe(this);
+    }
+
+    public void getEncryptionDetails(String username, String recipient) {
         // First check ticket
+        Account account = this.authentication.getAccount();
         account.handleDataResponseCommand(account.checkTicket, "CHECKTICKET");
         account.subscribe(this);
         // Contact server for encryption details
-        auth.getAccount().handleDataResponseCommand(() -> {
+        account.handleDataResponseCommand(() -> {
             try {
                 account.getOut().writeObject(new DataObject(DataObject.Status.VALID,("GETKEY:"+username+":"+recipient+":"+ new String(account.getTicket())).getBytes(StandardCharsets.UTF_8)));
                 return (DataObject) account.getIn().readObject();
@@ -46,8 +55,27 @@ public class Encryption extends Publisher<List<Object>> implements Subscriber<Da
             },"KEY");
     }
 
+    public static List<Object> extractEncryptionInfo(DataObject object) {
+        // Extract encryption details from DataObject
+        byte[] enc = object.getData();
+        // The first 16 bytes is the initialization vector
+        // Technically it's 0 to 15 but last index in function is exclusive
+        byte[] initVector = Arrays.copyOfRange(enc,0,16);
+        byte[] encodedKey = Arrays.copyOfRange(enc,16,enc.length);
+
+        SecretKeySpec key = new SecretKeySpec(encodedKey,"AES");
+        IvParameterSpec iv = new IvParameterSpec(initVector);
+        // Add key and iv to list
+        List<Object> encInfo = new ArrayList<Object>() {{
+            add(key);
+            add(iv);
+        }};
+
+        return encInfo;
+    }
+
     //actual encryption algorithm
-    private static String encrypt(String plaintext, SecretKey key, IvParameterSpec iv) {
+    public static String encrypt(String plaintext, SecretKey key, IvParameterSpec iv) {
         try {
             Cipher aes = Cipher.getInstance("AES/CBC/PKCS5Padding"); //initialize algorithm
             aes.init(Cipher.ENCRYPT_MODE, key, iv);
@@ -61,7 +89,7 @@ public class Encryption extends Publisher<List<Object>> implements Subscriber<Da
         }
     }
 
-    private String decrypt(String ciphertext, SecretKey key, IvParameterSpec iv) {
+    public static String decrypt(String ciphertext, SecretKey key, IvParameterSpec iv) {
         try {
             Cipher aes = Cipher.getInstance("AES/CBC/PKCS5Padding");
             aes.init(Cipher.DECRYPT_MODE, key, iv);
@@ -79,21 +107,11 @@ public class Encryption extends Publisher<List<Object>> implements Subscriber<Da
     public void update(DataObject context, String whoIs) {
         if (whoIs != null && whoIs.contains("KEY") && context.getStatus().equals(DataObject.Status.VALID)) {
             // Extract encryption details from DataObject
-            byte[] enc = context.getData();
-            // The first 16 bytes is the initialization vector
-            // Technically it's 0 to 15 but last index in function is exclusive
-            byte[] initVector = Arrays.copyOfRange(enc,0,16);
-            byte[] encodedKey = Arrays.copyOfRange(enc,16,enc.length);
-
-            SecretKeySpec key = new SecretKeySpec(encodedKey,"AES");
-            IvParameterSpec iv = new IvParameterSpec(initVector);
-            // Add key and iv to list
-            List<Object> encInfo = new ArrayList<Object>() {{
-                add(key);
-                add(iv);
-            }};
             // Notify subscribers of class
-            this.notifySubscribersInSameThread(encInfo,"ENCINFO");
+            this.notifySubscribersInSameThread(extractEncryptionInfo(context),"ENCINFO");
+        } else {
+            this.notifySubscribersInSameThread(null,"ENCINFO-FAIL");
         }
     }
+
 }

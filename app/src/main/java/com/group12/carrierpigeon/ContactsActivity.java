@@ -19,12 +19,10 @@ import com.group12.carrierpigeon.components.contacts.Contact;
 import com.group12.carrierpigeon.adapters.ContactsAdapter;
 import com.group12.carrierpigeon.controller.Authentication;
 import com.group12.carrierpigeon.networking.DataObject;
-import com.group12.carrierpigeon.threading.ReturnCommand;
 import com.group12.carrierpigeon.threading.Subscriber;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ContactsActivity extends AppCompatActivity implements Subscriber<DataObject> {
@@ -47,7 +45,7 @@ public class ContactsActivity extends AppCompatActivity implements Subscriber<Da
         Authentication authController = new Authentication("70.49.90.188",1250);
         Account account = authController.getAccount();
         account.setCredentials(Info.username, Info.password);
-        authController.Authenticate(Info.username, Info.password);
+        authController.authenticate(Info.username, Info.password);
         account.subscribe(this);
         authController.getAccount().getContacts();
 
