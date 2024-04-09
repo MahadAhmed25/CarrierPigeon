@@ -52,6 +52,7 @@ public class ChatActivity extends AppCompatActivity implements Subscriber<List<O
         sendMessagebtn = findViewById(R.id.message_send_btn);
 
         this.messages = new ArrayList<>();
+        this.messages.add(new ChatMessageViewHolder("Test","Test"));
 
         this.setup();
 
@@ -87,6 +88,7 @@ public class ChatActivity extends AppCompatActivity implements Subscriber<List<O
                     this.messages.add(new ChatMessageViewHolder(Info.username,(String) msg));
                 }
             }
+            recyclerView = findViewById(R.id.chatroom_recylcer);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setAdapter(new ChatMessageAdapter(getApplicationContext(),messages));
         }
