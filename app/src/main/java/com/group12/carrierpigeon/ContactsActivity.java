@@ -38,7 +38,7 @@ public class ContactsActivity extends AppCompatActivity implements Subscriber<Da
         Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
 
-        RecyclerView recyclerView = findViewById(R.id.contact_recycler);
+
 
         this.contacts = new ArrayList<>();
 
@@ -49,18 +49,27 @@ public class ContactsActivity extends AppCompatActivity implements Subscriber<Da
         account.subscribe(this);
         authController.getAccount().getContacts();
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new ContactsAdapter(getApplicationContext(), contacts ));
     }
 
     @Override
     public void update(DataObject context, String whoIs) {
-        if (context.getData() != null && context.getData().length > 0) {
+        if (context.getData() != null && whoIs.equals("CONTACTS")) {
             String dataString = new String(context.getData(), StandardCharsets.UTF_8);
             System.out.println(dataString);
-        } else {
-            System.out.println("DataObject has empty or null data.");
+            populateContacts(dataString);
+
+            RecyclerView recyclerView = findViewById(R.id.contact_recycler);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setAdapter(new ContactsAdapter(getApplicationContext(), contacts));
         }
+    }
+
+    public void populateContacts(String usersString) {
+        String[] usersArray = usersString.split(",");
+        for (String user: usersArray) {
+            this.contacts.add(new Contact(user.trim(), "1 111 111 1111", R.drawable.a));
+        }
+        System.out.println(contacts + "bye");
     }
 
     @Override
