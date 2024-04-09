@@ -138,7 +138,7 @@ public class ChatManagement extends Publisher<List<Object>> implements Subscribe
         } else if (whoIs != null && whoIs.contains("ENCINFO") && !this.gettingMessages) {
             // If not failed, send a message as normal
             this.sendMessage(context);
-        } else if (whoIs != null && whoIs.contains("MESG") && context != null) {
+        } else if (whoIs != null && whoIs.contains("MESG") && context != null && !this.gettingMessages) {
             // Once encryption info is created, then call send message
             this.sendMessage(context);
         } else if (whoIs != null && whoIs.contains("DONE") && context != null) {

@@ -40,7 +40,6 @@ public class Encryption extends Publisher<List<Object>> implements Subscriber<Da
     }
 
     public void getEncryptionDetails(String username, String recipient) {
-        System.out.println("Step2!");
         // First check ticket
         Account account = this.authentication.getAccount();
         account.handleDataResponseCommand(account.checkTicket, "CHECKTICKET");

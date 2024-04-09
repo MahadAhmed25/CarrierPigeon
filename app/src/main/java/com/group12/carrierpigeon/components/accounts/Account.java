@@ -142,20 +142,18 @@ public class Account extends Source {
         fut.subscribe(this);
     }
 
-    public void addContact(Contact contactToAdd) {
-        this.accountWorker.addCommand(() -> {
+    public void addContact(String contactName) {
+        this.accountWorker.addReturnCommand(() -> {
+            // First check connection
+            this.checkConnection.performAction();
+            // Attempt to add new contact
             try {
-                // First check connection
-                this.checkConnection.performAction();
-                // Send to add contact
-                out.writeObject(new DataObject(DataObject.Status.VALID,("DBCONTACT:"+this.username+":"+contactToAdd+":"+new String(this.getTicket())).getBytes(StandardCharsets.UTF_8)));
-                // Return response
-                DataObject obj = (DataObject) in.readObject();
-                // Then do whatever at this point if needing to check for errors
+                out.writeObject(new DataObject(DataObject.Status.VALID,("DBCONTACTADD:"+this.username+":"+contactName+":"+new String(this.getTicket())).getBytes()));
+                return (DataObject) in.readObject();
             } catch (Exception e) {
-
+                return new DataObject(DataObject.Status.FAIL,null);
             }
-        });
+        },"ADDCONTACT").subscribe(this);
     }
 
     @Override
