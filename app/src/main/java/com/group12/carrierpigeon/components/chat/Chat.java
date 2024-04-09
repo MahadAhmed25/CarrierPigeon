@@ -45,6 +45,6 @@ public class Chat extends Source {
     }
 
     @Override
-    public void update(DataObject context) {
+    public void update(DataObject context, String whoIs) {
     }
 }

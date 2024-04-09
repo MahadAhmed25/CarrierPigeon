@@ -8,6 +8,8 @@ public class Future<T> extends Publisher<T> {
 
     private T returnObject = null;
 
+    private String whoIs;
+
     /**
      * Gets the returned object from a Worker class. If the return is not valid yet, this method will block until such return is valid. Method is thread-safe.
      * If the caller does not want to risk being blocked, subscribe to the class via a call to {@link Publisher#subscribe(Subscriber)}. {@link Subscriber} class will be notified via execution
@@ -31,8 +33,10 @@ public class Future<T> extends Publisher<T> {
     public synchronized void setReturnObject(T returnObject) {
         this.returnObject = returnObject;
         this.notifyAll();
-        this.notifySubscribers(returnObject);
+        this.notifySubscribers(returnObject,this.whoIs);
     }
 
-
+    public void setWhoIs(String whoIs) {
+        this.whoIs = whoIs;
+    }
 }

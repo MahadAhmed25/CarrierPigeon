@@ -56,7 +56,7 @@ public class ContactsActivity extends AppCompatActivity implements Subscriber<Da
     }
 
     @Override
-    public void update(DataObject context) {
+    public void update(DataObject context, String whoIs) {
         if (context.getData() != null && context.getData().length > 0) {
             String dataString = new String(context.getData(), StandardCharsets.UTF_8);
             System.out.println(dataString);

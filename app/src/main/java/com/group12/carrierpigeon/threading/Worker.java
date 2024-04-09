@@ -73,6 +73,15 @@ public class Worker<T> {
         return future;
     }
 
+    public synchronized Future<T> addReturnCommand(ReturnCommand<T> command, String whoIs) {
+        Future<T> future = new Future<>();
+        future.setWhoIs(whoIs);
+        FutureCommandTuple<T> tuple = new FutureCommandTuple<>(future,command);
+        this.workReturnQueue.add(tuple);
+        this.notify();
+        return future;
+    }
+
     // Method for WorkerThread class to perform the next commands in both queues
     private void performNextCommand() throws InterruptedException {
         synchronized (this) {

@@ -4,8 +4,8 @@ import com.group12.carrierpigeon.components.Source;
 import com.group12.carrierpigeon.components.contacts.Contact;
 import com.group12.carrierpigeon.networking.DataObject;
 import com.group12.carrierpigeon.threading.Command;
+import com.group12.carrierpigeon.threading.Future;
 import com.group12.carrierpigeon.threading.ReturnCommand;
-import com.group12.carrierpigeon.threading.Subscriber;
 import com.group12.carrierpigeon.threading.Worker;
 
 import java.io.ObjectInputStream;
@@ -138,7 +138,8 @@ public class Account extends Source {
     }
 
     public void getContacts() {
-        this.accountWorker.addReturnCommand(this.getContacts).subscribe(this);
+        Future fut = this.accountWorker.addReturnCommand(this.getContacts,"CONTACTS");
+        fut.subscribe(this);
     }
 
     public void addContact(Contact contactToAdd) {
@@ -168,7 +169,7 @@ public class Account extends Source {
     }
 
     @Override
-    public void update(DataObject context) {
-        this.notifySubscribersInSameThread(context);
+    public void update(DataObject context, String whoIs) {
+        this.notifySubscribersInSameThread(context,whoIs);
     }
 }

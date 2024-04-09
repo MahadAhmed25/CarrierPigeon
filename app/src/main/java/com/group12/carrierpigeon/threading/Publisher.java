@@ -21,10 +21,10 @@ public class Publisher<T> {
      * Notifies subscribers. Execution happens on the main UI thread
      * @param context the type parameter object which passes messages through to {@link Subscriber}s
      */
-    public void notifySubscribers(T context) {
+    public void notifySubscribers(T context, String whoIs) {
         new Handler(Looper.getMainLooper()).post(() -> {
             for (Subscriber<T> subscriber : this.subscribers) {
-                subscriber.update(context);
+                subscriber.update(context,whoIs);
             }
         });
     }
@@ -33,9 +33,9 @@ public class Publisher<T> {
      * Notifies subscribers. Execution happens on the same thread as the caller
      * @param context the type parameter object which passes messages through to {@link Subscriber}s
      */
-    public void notifySubscribersInSameThread(T context) {
+    public void notifySubscribersInSameThread(T context, String whoIs) {
         for (Subscriber<T> subscriber : this.subscribers) {
-            subscriber.update(context);
+            subscriber.update(context, whoIs);
         }
     }
 

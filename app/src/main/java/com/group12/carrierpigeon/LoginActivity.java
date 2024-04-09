@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity implements Subscriber<Boole
     }
 
     @Override
-    public void update(Boolean context) {
+    public void update(Boolean context, String whoIs) {
         if (context) {
            // this.displayStatusText("Validated user credentials, please wait...");
             // To move to another screen, use Intents
