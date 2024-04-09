@@ -1,6 +1,7 @@
 package com.group12.carrierpigeon;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -52,10 +53,18 @@ public class ChatActivity extends AppCompatActivity implements Subscriber<List<O
         sendMessagebtn = findViewById(R.id.message_send_btn);
 
         this.messages = new ArrayList<>();
-        this.messages.add(new ChatMessageViewHolder("Test","Test"));
 
         this.setup();
 
+    }
+
+    public void onSendButtonPressed(View view) {
+        // Get message that was typed by user
+        messageInput.setEnabled(false);
+        sendMessagebtn.setEnabled(false);
+        String message = messageInput.getText().toString();
+        // Call chat controller to send message
+        chatManagementController.sendMessage(message,Info.username,this.contact);
     }
 
     private void setup() {
@@ -85,14 +94,30 @@ public class ChatActivity extends AppCompatActivity implements Subscriber<List<O
             for (Object msg : context) {
                 String mesg = (String) msg;
                 if (!mesg.isEmpty()) {
-                    this.messages.add(new ChatMessageViewHolder(Info.username,(String) msg));
+                    this.messages.add(new ChatMessageViewHolder(Info.username, (String) msg));
                 }
             }
-
+            this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            ChatMessageAdapter adapter = new ChatMessageAdapter(getApplicationContext(), messages);
+            this.recyclerView.setAdapter(adapter);
         }
-        this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        ChatMessageAdapter adapter = new ChatMessageAdapter(getApplicationContext(), messages);
-        this.recyclerView.setAdapter(adapter);
-
+        else if (whoIs != null && whoIs.contains("SENT") && context != null) {
+            // Check if the message was sent successfully
+            if (((String) context.get(0)).contains("VALID")) {
+                messageInput.setEnabled(true);
+                // Clearing text indicates it sent
+                messageInput.getText().clear();
+                sendMessagebtn.setEnabled(true);
+                // Indicates the chat needs to be updated
+                this.messages.clear();
+                this.setup = 0;
+                // Request to get messages again
+                this.chatManagementController.getMessages(this.contact,Info.username);
+            } else {
+                // Message sending was not successful so just re-enable buttons
+                messageInput.setEnabled(true);
+                sendMessagebtn.setEnabled(true);
+            }
+        }
     }
 }

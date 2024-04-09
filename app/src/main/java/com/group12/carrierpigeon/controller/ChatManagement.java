@@ -142,7 +142,7 @@ public class ChatManagement extends Publisher<List<Object>> implements Subscribe
             // Once encryption info is created, then call send message
             this.sendMessage(context);
         } else if (whoIs != null && whoIs.contains("DONE") && context != null) {
-            this.notifySubscribersInSameThread(new ArrayList<Object>(){{add("SENT!");}},"SENT");
+            this.notifySubscribersInSameThread(new ArrayList<Object>(){{add(context.get(0));}},"SENT");
         } else if (whoIs != null && whoIs.contains("ENCINFO") && this.gettingMessages) {
             // Call to get messages
             this.getMessages(context);

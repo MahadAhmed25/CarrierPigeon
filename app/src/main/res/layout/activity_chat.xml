@@ -74,16 +74,17 @@
             android:layout_toLeftOf="@id/message_send_btn"/>
 
         <ImageButton
+            android:id="@+id/message_send_btn"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@drawable/send"
             android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
+            android:layout_marginStart="10dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            app:tint="@color/purple"
-            android:id="@+id/message_send_btn"
+            android:onClick="onSendButtonPressed"
             android:padding="8dp"
-            android:layout_marginStart="10dp" />
+            android:src="@drawable/send"
+            app:tint="@color/purple" />
     </RelativeLayout>
 
 
