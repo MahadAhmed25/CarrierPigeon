@@ -19,7 +19,7 @@ import com.group12.carrierpigeon.threading.Subscriber;
 
 public class LoginActivity extends AppCompatActivity implements Subscriber<Boolean> {
 
-    private static Authentication authController;
+    public static Authentication authController;
 
     private Button login;
     private ProgressBar bar;
@@ -30,7 +30,6 @@ public class LoginActivity extends AppCompatActivity implements Subscriber<Boole
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("This is an on create");
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
         // To find items from the view (i.e., objects within the xml file), call this method along with the identifier of the object
@@ -50,8 +49,6 @@ public class LoginActivity extends AppCompatActivity implements Subscriber<Boole
     // When the login button is pressed, this method will fire
     public void onLoginClick(View view) {
         try {
-
-            System.out.println("This is a test!");
 
            // this.displayStatusText("Communicating with authentication services...");
 
@@ -85,7 +82,6 @@ public class LoginActivity extends AppCompatActivity implements Subscriber<Boole
            // this.displayStatusText("Validated user credentials, please wait...");
             // To move to another screen, use Intents
             //Intent move = new Intent(this, MainActivity.class);
-            System.out.println("Switched to some shit");
             //switch screens
             Intent move= new Intent(this, ContactsActivity.class);
             startActivity(move);
@@ -95,7 +91,6 @@ public class LoginActivity extends AppCompatActivity implements Subscriber<Boole
         } else {
             //this.displayStatusText("Unable to authenticate user");
             //bar.setVisibility(View.INVISIBLE);
-            System.out.println("This is very cool");
             this.enableLogin();
         }
     }

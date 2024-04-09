@@ -49,7 +49,7 @@ public class ChatManagement extends Publisher<List<Object>> implements Subscribe
     }
 
     /**
-     * Gets messages from a given user received by another user
+     * Gets messages from a given user received by another user. Messages will be delivered as an update() call with whoIs MESSAGES
      * @param sentUser the username of the user who was sending messages
      * @param toUser the username of the user who was receiving the messages (i.e., this method will get the messages they have received)
      */
