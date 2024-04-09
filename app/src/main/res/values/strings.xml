@@ -10,6 +10,16 @@
     <string name="noaccount_text">Do Not Have an account?</string>
     <string name="register_text">Register Now</string>
     <string name="apptitle_text">CarrierPigeon </string>
+    <string name="personal_information_text">Personal Information </string>
+    <string name="notification_chat_text">Notifications and Chats </string>
+    <string name="privacy_and_permission_text">Privacy and Position </string>
+    <string name="setting_text">Settings</string>
+    <string name="data_storage_text">Data and Storage</string>
+    <string name="password_account_text">Password and Account</string>
+    <string name="More_text">More</string>
+    <string name="HELP_text">Help</string>
+    <string name="about_text">About</string>
+    <string name="feedback_text">Feedback</string>
     <string-array name="contactScreen_menuOptions">
         <item>Add Contact</item>
     </string-array>

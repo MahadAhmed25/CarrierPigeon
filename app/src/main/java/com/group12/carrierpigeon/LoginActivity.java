@@ -88,6 +88,9 @@ public class LoginActivity extends AppCompatActivity implements Subscriber<Boole
             // To move to another screen, use Intents
             //Intent move = new Intent(this, MainActivity.class);
             System.out.println("Switched to some shit");
+            //switch screens
+            Intent move= new Intent(this, ContactsActivity.class);
+            startActivity(move);
             //startActivity(move);
             // Davis: Commented out method sends a message to testUser1
             //new Chat(authController.getAccount()).sendMessage("Wow!");
