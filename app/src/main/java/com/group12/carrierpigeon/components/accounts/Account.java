@@ -1,6 +1,7 @@
 package com.group12.carrierpigeon.components.accounts;
 
 import com.group12.carrierpigeon.components.Source;
+import com.group12.carrierpigeon.components.contacts.Contact;
 import com.group12.carrierpigeon.networking.DataObject;
 import com.group12.carrierpigeon.threading.Command;
 import com.group12.carrierpigeon.threading.ReturnCommand;
@@ -24,6 +25,20 @@ public class Account extends Source {
     private Socket comSocket;
     private ObjectOutputStream out;
     private ObjectInputStream in;
+
+    public ReturnCommand<DataObject> getContacts = () -> {
+        try {
+            // First check connection
+            this.checkConnection.performAction();
+            // Send to get contacts
+            out.writeObject(new DataObject(DataObject.Status.VALID,("DBCONTACT:"+this.username+":"+new String(this.getTicket())).getBytes(StandardCharsets.UTF_8)));
+            // Return response
+            return (DataObject) in.readObject();
+        } catch (Exception e) {
+
+        };
+        return new DataObject(DataObject.Status.FAIL,null);
+    };
 
     public ReturnCommand<DataObject> checkTicket = () -> {
         try {
@@ -119,6 +134,26 @@ public class Account extends Source {
 
     public byte[] getTicket() {
         return this.ticket;
+    }
+
+    public void getContacts() {
+        this.accountWorker.addReturnCommand(this.getContacts).subscribe(this);
+    }
+
+    public void addContact(Contact contactToAdd) {
+        this.accountWorker.addCommand(() -> {
+            try {
+                // First check connection
+                this.checkConnection.performAction();
+                // Send to add contact
+                out.writeObject(new DataObject(DataObject.Status.VALID,("DBCONTACT:"+this.username+":"+contactToAdd+":"+new String(this.getTicket())).getBytes(StandardCharsets.UTF_8)));
+                // Return response
+                DataObject obj = (DataObject) in.readObject();
+                // Then do whatever at this point if needing to check for errors
+            } catch (Exception e) {
+
+            }
+        });
     }
 
     @Override
