@@ -1,12 +1,14 @@
 package com.group12.carrierpigeon.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.group12.carrierpigeon.ChatActivity;
 import com.group12.carrierpigeon.R;
 import com.group12.carrierpigeon.components.contacts.Contact;
 import com.group12.carrierpigeon.components.contacts.ContactsViewHolder;
@@ -34,6 +36,12 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsViewHolder> {
         holder.name.setText(contacts.get(position).getName());
         holder.phoneNo.setText(contacts.get(position).getPhoneNo());
         holder.contactDP.setImageResource(contacts.get(position).getImage());
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ChatActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        });
 
     }
 
