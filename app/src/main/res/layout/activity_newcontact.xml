@@ -34,7 +34,6 @@
         android:drawablePadding="12dp"
         android:ems="10"
         android:hint="USERNAME"
-        android:inputType="phone"
         android:paddingStart="20dp"
         android:paddingEnd="100dp"
         android:textSize="14sp"

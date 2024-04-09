@@ -48,7 +48,7 @@ public class NewContactActivity extends AppCompatActivity implements Subscriber<
     public void onSearchClick(View view) {
         // Show loading screen
         this.loadingDialog.show();
-        String username = usernameToAdd.getText().toString().trim().replaceAll("\\s+", "");
+        String username = usernameToAdd.getText().toString();
         // Call addContact to attempt to add new contact
         LoginActivity.authController.getAccount().addContact(username);
 
