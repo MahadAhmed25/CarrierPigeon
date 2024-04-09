@@ -159,13 +159,13 @@ public class Account extends Source {
     }
 
     @Override
-    public void handleDataCommand(Command data) {
+    public void handleDataCommand(Command data, String whoIs) {
         this.accountWorker.addCommand(data);
     }
 
     @Override
-    public void handleDataResponseCommand(ReturnCommand<DataObject> data) {
-        this.accountWorker.addReturnCommand(data).subscribe(this);
+    public void handleDataResponseCommand(ReturnCommand<DataObject> data,String whoIs) {
+        this.accountWorker.addReturnCommand(data,whoIs).subscribe(this);
     }
 
     @Override

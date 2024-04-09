@@ -35,12 +35,12 @@ public class Chat extends Source {
 
 
     @Override
-    public void handleDataCommand(Command data) {
+    public void handleDataCommand(Command data, String whoIs) {
 
     }
 
     @Override
-    public void handleDataResponseCommand(ReturnCommand<DataObject> data) {
+    public void handleDataResponseCommand(ReturnCommand<DataObject> data, String whoIs) {
 
     }
 

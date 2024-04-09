@@ -22,7 +22,7 @@ public class Authentication extends Publisher<Boolean> implements Subscriber<Dat
     public void Authenticate(String username, String password) {
         this.account.setCredentials(username, password);
         Info.password = password; Info.username = username;
-        this.account.handleDataResponseCommand(this.account.init);
+        this.account.handleDataResponseCommand(this.account.init,"AUTH");
     }
 
     public Account getAccount() {
